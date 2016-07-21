@@ -5,13 +5,16 @@ const {Menu} = electron;
 // Module to create native browser window.
 const {BrowserWindow} = electron;
 
+// go DEBUG false for main deployment
+const DEBUG = true;
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600});
+  win = new BrowserWindow({width: 1200, height: 900});
 
   // open external urls ( with target="_blank" ) in user browser
   win.webContents.on('new-window', function(e, url) {
@@ -20,10 +23,14 @@ function createWindow() {
   });
 
   // and load the index.html of the app.
-  win.loadURL(`file://${__dirname}/template/index.html`);
+  win.loadURL(`file://${__dirname}/index.html`);
 
-  // Open the DevTools.
-  // win.webContents.openDevTools();
+  
+  if(DEBUG){
+    // Open the DevTools.
+    win.webContents.openDevTools();
+  }
+
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -52,6 +59,10 @@ function createWindow() {
             { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
             { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
       ]},
+  ];
+
+  if(DEBUG){
+    template = template.concat([
       {
         label: 'View',
         submenu: [
@@ -80,7 +91,8 @@ function createWindow() {
           },
         ]
       },
-  ];
+    ]);
+  }
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }

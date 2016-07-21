@@ -4,7 +4,7 @@
   "description": "Vehicle petrol consumption management software based on coupon system",
   "main": "main.js",
   "scripts": {
-    "start": "electron index.js"
+    "start": "electron main.js"
   },
   "author": "Dishant Chavda",
   "license": "ISC",
