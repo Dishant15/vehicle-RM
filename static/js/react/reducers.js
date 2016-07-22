@@ -1,5 +1,5 @@
 const initPass = {
-	valide: null,
+	valide: false,
 	level: null
 };
 
