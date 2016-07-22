@@ -14,4 +14,8 @@ const middleware = applyMiddleware(thunk);
 
 const store = createStore(reducers, middleware);
 
+store.subscribe(()=>{
+	console.log("new store :", store.getState());
+});
+
 export default store;

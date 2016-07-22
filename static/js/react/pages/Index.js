@@ -1,22 +1,23 @@
 import React from 'react';
+import { connect } from "react-redux";
 
+import { passwordValidated } from "../actions";
+
+@connect((store) => {
+	return {
+		pass: store.pass,
+		something: "not what you think"
+	};
+})
 export default class Index extends React.Component {
-	constructor(){
-		super();
-		this.state = {
-			password:null
-		};
-	}
 
 	passwordAdded(){
-		this.setState({
-			password:"set"
-		});
+		this.props.dispatch(passwordValidated(3));
 	}
 
 	render(){
 		let handlePass;
-		if(this.state.password){
+		if(this.props.pass.valide){
 			handlePass = (<h1>Password entered</h1>);
 		}
 

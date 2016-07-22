@@ -11,6 +11,9 @@ export const passReducer = (state=initPass, action) => {
 		case "PASSWORD_UNVALID": {
 			return {...state, valide:false, level: null }
 		}
+		default: {
+			return state;
+		}
 	}
 };
 
