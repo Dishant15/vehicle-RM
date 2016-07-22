@@ -5,6 +5,9 @@ import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import Layout from './Layout';
 import Index from './pages/Index';
 
+import store from './store';
+
+console.log(store);
 
 const app = document.getElementById('app');
 

@@ -11,7 +11,10 @@
   "dependencies": {
     "react": "latest",
     "react-dom": "latest",
-    "react-router": "latest"
+    "react-redux": "^4.4.5",
+    "react-router": "latest",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-loader": "^6.2.0",
@@ -22,7 +25,7 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
-    "webpack": "^1.12.9",
-    "electron-prebuilt": "^1.2.0"
+    "electron-prebuilt": "^1.2.0",
+    "webpack": "^1.12.9"
   }
 }
