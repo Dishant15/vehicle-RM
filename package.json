@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.3.0",
+    "nedb": "^1.8.0",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "^4.4.5",

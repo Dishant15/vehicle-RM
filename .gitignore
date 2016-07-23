@@ -3,6 +3,9 @@ logs
 *.log
 npm-debug.log*
 
+# sass
+.sass-cache/*
+
 # Runtime data
 pids
 *.pid

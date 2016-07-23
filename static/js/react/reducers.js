@@ -6,10 +6,17 @@ const initPass = {
 export const passReducer = (state=initPass, action) => {
 	switch(action.type){
 		case "PASSWORD_VALIDATED": {
-			return {...state, valide:true, level: action.payload }
+			return {...state, valide:true, level: action.payload };
 		}
 		case "PASSWORD_UNVALID": {
-			return {...state, valide:false, level: null }
+			return {...state, valide:false, level: null };
+		}
+		case "USER_LOGOUT": {
+			return initPass;
+		}
+		case "PASS_CHANGED": {
+			console.log("password changed");
+			return initPass;
 		}
 		default: {
 			return state;

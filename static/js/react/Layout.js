@@ -9,6 +9,7 @@ export default class Layout extends React.Component {
 		return(
 			<div class="container">
 				<Navbar/>
+				<hr/>
 				{this.props.children}
 				<hr/>
 				<div class="text-center text-warning">

@@ -43,16 +43,19 @@ class PasswordForm extends React.Component {
 		});
 	}
 
+	renderError() {
+		if(this.state.error) return( <p class='text-warning'>Incorrect Password !</p> );
+	}
+
 	render() {
-		let error;
-		if(this.state.error){
-			error = <p class='text-warning'>Incorrect Password !</p>;
-		}
+		let colorBlack = {
+			margin: "30px"
+		};
 
 		return (
 			<div class="container">
-				{error}
-				<input type="password" onChange={this.handleChange.bind(this)} value={this.state.password}/>
+				{this.renderError.bind(this)()}
+				<input type="password" onChange={this.handleChange.bind(this)} value={this.state.password} style={colorBlack}/>
 
 				<button class="btn btn-success" onClick={this.checkPass.bind(this)}> Login </button>
 			</div>

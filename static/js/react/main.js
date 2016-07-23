@@ -5,6 +5,9 @@ import { Provider } from "react-redux";
 
 import Layout from './Layout';
 import Index from './pages/Index';
+import VehicleForm from './components/VehicleForm';
+import CouponForm from './components/CouponForm';
+import ChangePassForm from './components/ChangePassForm';
 
 import store from './store';
 
@@ -15,6 +18,9 @@ ReactDom.render(
 		<Router history={hashHistory}>
 			<Route path='/' component={Layout}>
 				<IndexRoute component={Index}></IndexRoute>
+				<Route path='change-pass' component={ChangePassForm}/>
+				<Route path='add-coupon' component={CouponForm}/>
+				<Route path='add-vehicle' component={VehicleForm}/>
 			</Route>
 		</Router>
 	</Provider>,
