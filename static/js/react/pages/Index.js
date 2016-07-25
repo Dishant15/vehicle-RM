@@ -1,67 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux";
-import bcrypt from "bcryptjs";
 
 import { passwordValidated } from "../actions";
 import Home from "../components/Home";
-
-const HASH_SUPERUSER = "$2a$10$c5F2f/dYJWOFrUw27MKk1Olcd8j9b36u6AHvkcacH4FnJsT3l0RIO";
-const HASH_STAFF = "$2a$10$cROLpIwfpQ.ANYoBG0F.UO3D5kbCjCbKNyDJR6iNIJLEd92CIrG7e";
-// creating hash of the password
-// var salt = bcrypt.genSaltSync(10);
-// var hash = bcrypt.hashSync("test2", salt);
-// console.log(hash);
-
-class PasswordForm extends React.Component {
-	constructor(){
-		super();
-		this.state = {
-			password: "",
-			error: null
-		};
-	}
-
-	checkPass(){
-		const password = this.state.password;
-		if(bcrypt.compareSync(password, HASH_SUPERUSER)){
-			this.props.passwordMatched(1); // level1 super user detected
-		}
-		else if(bcrypt.compareSync(password, HASH_STAFF)){
-			this.props.passwordMatched(2); // level2 staff user detected
-		} else {
-			this.setState({
-				password: "",
-				error:true
-			})
-		}
-	}
-
-	handleChange(e) {
-		this.setState({
-			password: e.target.value,
-			error: null
-		});
-	}
-
-	renderError() {
-		if(this.state.error) return( <p class='text-warning'>Incorrect Password !</p> );
-	}
-
-	render() {
-		let colorBlack = {
-			margin: "30px"
-		};
-
-		return (
-			<div class="container">
-				{this.renderError.bind(this)()}
-				<input type="password" onChange={this.handleChange.bind(this)} value={this.state.password} style={colorBlack}/>
-
-				<button class="btn btn-success" onClick={this.checkPass.bind(this)}> Login </button>
-			</div>
-		)
-	}
-}
+import LoginForm from "../components/LoginForm";
 
 @connect((store) => {
 	return {
@@ -79,7 +21,7 @@ export default class Index extends React.Component {
 		if(this.props.pass_valide){
 			content = <Home/>;
 		} else {
-			content = <PasswordForm passwordMatched={this.passwordMatched.bind(this)}/>;
+			content = <LoginForm passwordMatched={this.passwordMatched.bind(this)}/>;
 		}
 
 		return(

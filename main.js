@@ -118,3 +118,5 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+module.exports = app;

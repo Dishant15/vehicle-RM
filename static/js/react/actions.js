@@ -1,23 +1,23 @@
-var Datastore = require('nedb');
+import axios from 'axios';
 
-// db = {};
-db = new Datastore({ filename:'password.db', autoload:true });
-// db.vehicles = new Datastore({ filename:'vehicles.db', autoload:true });
-// db.coupons = new Datastore({ filename:'coupons.db', autoload:true });
-// db.prices = new Datastore({ filename:'prices.db', autoload:true });
-
-// db.password.loadDatabase();
-// db.vehicles.loadDatabase();
-// db.coupons.loadDatabase();
-// db.prices.loadDatabase();
-
-export function insertPassHash(input_pass){
-	return function(dispatch) {
-		dispatch({
-			type:"PASS_CHANGED", 
-			payload:"newhash"
-		});
-	}
+export function getHashPass(){
+	// get password hash saved from the database
+	return ((dispatch) => {
+		axios.get("http://localhost:8080/get-pass")
+			.then((reaponse) => {
+				dispatch({
+					type:"PASS_REQ_SUCCESS",
+					payload: reaponse.data
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: "PASS_REQ_FAILED",
+					payload: err
+				});
+			});
+	});
+	
 }
 
 export function logout(level){
