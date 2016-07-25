@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import { checkSuperUserPass } from "../utils";
+import { changePassStateReset, changePassword } from "../actions";
 
 export default class ChangePassForm extends React.Component {
 	constructor(){
@@ -84,6 +86,12 @@ class CheckSuperUserPass extends React.Component {
 	}
 }
 
+@connect((store) => {
+	return {
+		pass_changing: store.pass.pass_changing,
+		pass_changed: store.pass.pass_changed
+	};
+})
 class ChangeAllPasswordForm extends React.Component {
 	constructor(){
 		super();
@@ -96,8 +104,12 @@ class ChangeAllPasswordForm extends React.Component {
 			superuser_error: false,
 			staffuser_error: false,
 		};
-
+		
 		this.state = this.initState;
+	}
+
+	componentWillMount() {
+		this.props.dispatch(changePassStateReset());
 	}
 
 	handlePassChange(i, e){
@@ -130,25 +142,25 @@ class ChangeAllPasswordForm extends React.Component {
 	submit_password(i) {
 		if(i == 1){
 			// dealing with superuser password change
-			if(this.state.superuser_password1 == this.state.superuser_password2){
-				console.log("we can now change superuser password");
+			if(this.state.superuser_password1 == this.state.superuser_password2 && this.state.superuser_password1.length > 0 && this.state.superuser_password2.length > 0){
+				this.props.dispatch(changePassword(1, this.state.superuser_password1));
 				this.setState(this.initState);
 			} else {
 				this.setState({
 					...this.initState,
 					superuser_error:true,
-					message:"Password mismatch error!"
+					message:"Password mismatch or empty field error!"
 				});
 			}
 		} else {
-			if(this.state.staffuser_password1 == this.state.staffuser_password2){
-				console.log("we can now change staffuser password");
+			if(this.state.staffuser_password1 == this.state.staffuser_password2 && this.state.staffuser_password1.length > 0 && this.state.staffuser_password2.length > 0){
+				this.props.dispatch(changePassword(2, this.state.staffuser_password1));
 				this.setState(this.initState);
 			} else {
 				this.setState({
 					...this.initState,
 					staffuser_error:true,
-					message:"Password mismatch error!"
+					message:"Password mismatch or empty field error!"
 				});
 			}
 		}
@@ -164,21 +176,26 @@ class ChangeAllPasswordForm extends React.Component {
 			superuser_error_block = <div class="text-danger">{this.state.message}</div>
 		}
 
+		let success_msg;
+		if(this.props.pass_changed){
+			success_msg = <small class="text-success">Password Changed successfully!!</small>
+		}
+
 		return(
 			<div>
-				<h2>Change SuperUser Password</h2>
+				{success_msg}
 				<div class = "form-group">
 					{superuser_error_block}
-			        <label for = "name">New SuperUser Password</label>
+			        <label for = "name">Change SuperUser Password</label>
 			        <input type="password" class="form-control" onChange={this.handlePassChange.bind(this,1)} value={this.state.superuser_password1} placeholder="Enter new superuser password"/>
 			        <input type="password" class="form-control" onChange={this.handlePassChange.bind(this,2)} value={this.state.superuser_password2} placeholder="conform password"/>
 				</div>
 				<button class="btn btn-success" onClick={this.submit_password.bind(this, 1)}>Change Password</button>
 				<hr/>
-				<h2>Change StaffUser Password</h2>
+			
 				<div class = "form-group">
 					{staffuser_error_block}
-			        <label for = "name">New StaffUser Password</label>
+			        <label for = "name">Change StaffUser Password</label>
 			        <input type="password" class="form-control" onChange={this.handlePassChange.bind(this,3)} value={this.state.staffuser_password1} placeholder="Enter new staffuser password"/>
 			        <input type="password" class="form-control" onChange={this.handlePassChange.bind(this,4)} value={this.state.staffuser_password2} placeholder="conform password"/>
 				</div>

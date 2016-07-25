@@ -42,10 +42,24 @@ dispatcher.onGet("/get-pass", function(req, res) {
 	});
 });
 
-//A sample POST request
-dispatcher.onPost("/post1", function(req, res) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Got Post Data');
+
+dispatcher.onPost("/change-pass", function(req, res) {
+	// get superuser and staffuserhash in req.body post it to database
+	var hashData = JSON.parse(req.body);
+	if(hashData.level == 1){
+		db.update({_id:1}, { $set: {superuser_hash:hashData.hash} }, {returnUpdatedDocs:true}, function(err, numAffected, affectedDocuments) {
+				res.writeHead(200, {'Content-Type': 'text/json'});
+		    	res.end(JSON.stringify(affectedDocuments));
+			}
+		);
+	} else {
+		db.update({_id:1}, { $set: {staffuser_hash:hashData.hash} }, {returnUpdatedDocs:true}, function(err, numAffected, affectedDocuments) {
+				res.writeHead(200, {'Content-Type': 'text/json'});
+		    	res.end(JSON.stringify(affectedDocuments));
+			}
+		);
+	}
+	
 });
 
 //Create a server

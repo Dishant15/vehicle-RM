@@ -7,9 +7,12 @@ import bcrypt from "bcryptjs";
 // const HASH_SUPERUSER = "$2a$10$c5F2f/dYJWOFrUw27MKk1Olcd8j9b36u6AHvkcacH4FnJsT3l0RIO";
 // const HASH_STAFF = "$2a$10$cROLpIwfpQ.ANYoBG0F.UO3D5kbCjCbKNyDJR6iNIJLEd92CIrG7e";
 // creating hash of the password
-// var salt = bcrypt.genSaltSync(10);
-// var hash = bcrypt.hashSync("test2", salt);
+
 // console.log(hash);
+export function generateHash(in_pass) {
+	const salt = bcrypt.genSaltSync(10);
+	return bcrypt.hashSync(in_pass, salt);
+}
 
 export function checkSuperUserPass(in_pass) {
 	const superuser_hash = store.getState().pass.superuser_hash;

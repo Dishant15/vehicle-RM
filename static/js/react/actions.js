@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { generateHash } from "./utils";
 
 export function getHashPass(){
 	// get password hash saved from the database
@@ -18,6 +19,28 @@ export function getHashPass(){
 			});
 	});
 	
+}
+
+export function changePassword(level, new_password) {
+	return ((dispatch) => {
+		const dataToServer = {
+			level,
+			hash:generateHash(new_password)
+		};
+		axios.post("http://localhost:8080/change-pass", dataToServer)
+			.then((response) => {
+				dispatch({
+					type:"PASSWORD_CHANGED",
+					payload: response.data
+				});
+			});
+	});
+}
+
+export function changePassStateReset() {
+	return {
+		type: "PASS_CHANGE_STATE_RESET"
+	};
 }
 
 export function logout(level){
