@@ -1,5 +1,6 @@
 {
   "name": "vehicle-RM",
+  "productName": "Vehicle Fuel Manager",
   "version": "1.0.0",
   "description": "Vehicle petrol consumption management software based on coupon system",
   "main": "main.js",
