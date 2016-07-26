@@ -1,6 +1,26 @@
 import axios from 'axios';
 import { generateHash } from "./utils";
 
+export function addNewCoupon(coupon) {
+	// add new vehicle entry to database
+	return ((dispatch) => {
+		axios.post("http://localhost:8015/add-coupon", coupon)
+			.then((response) => {
+				// server must return whole new list of entries so we can update store with it
+				dispatch({
+					type:"COUPON_ADDED",
+					payload: response.data
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: "COUPON_ADDITION_FAIL",
+					payload: err
+				});
+			});
+	});
+}
+
 export function editVehicleEntry(entry) {
 	// add new vehicle entry to database
 	return ((dispatch) => {

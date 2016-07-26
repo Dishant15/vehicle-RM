@@ -47,6 +47,7 @@ export const passReducer = (state=initPass, action) => {
 export const vehicleReducer = (state=[], action) => {
 	switch(action.type){
 		case "VEHICLE_ENTRY_CREATED": {
+			// some kind of notification?
 			state.push(action.payload);
 			return state;
 		}
@@ -68,10 +69,15 @@ export const vehicleReducer = (state=[], action) => {
 	}
 };
 
-export const priceReducer = (state=[], action) => {
-	return state;
-};
-
 export const couponReducer = (state=[], action) => {
-	return state;
+	switch(action.type){
+		case "COUPON_ADDED": {
+			// some kind of notification?
+			return state;
+		}
+
+		default: {
+			return state;
+		}
+	}
 };

@@ -50,8 +50,8 @@ export default class VehicleForm extends React.Component {
 		this.setState({fuel:e.currentTarget.value, error:false});
 	}
 
-	vtypeChanged(val){
-		this.setState({vtype:val.value, error:false});
+	vtypeChanged(e){
+		this.setState({vtype:e.value, error:false});
 	}
 
 	submitForm(){

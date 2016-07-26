@@ -7,6 +7,7 @@ var Datastore = require('nedb')
 
 db.password = new Datastore({ filename: 'dYJWOFrUw27', autoload: true });
 db.vehicles = new Datastore({ filename: 'ANYoBG0F45D', autoload: true });
+db.coupons = new Datastore({ filename: 'j9b36u6AHvkc', autoload: true });
 
 //Lets define a port we want to listen to
 const PORT=8015; 
@@ -100,6 +101,16 @@ dispatcher.onPost("/edit-vehicle", function(req, res) {
 	});
 })
 
+//All Coupon routes bellow ----
+
+dispatcher.onPost("/add-coupon", function(req, res) {
+	db.coupons.insert(JSON.parse(req.body), function(err, newDoc) {
+			res.writeHead(200, {'Content-Type': 'text/json'});
+			console.log(newDoc);
+	    	res.end(JSON.stringify(newDoc));
+	    }
+	);
+});
 
 //Create a server
 var server = http.createServer(handleRequest);
