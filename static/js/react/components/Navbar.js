@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "react-router";
 import { connect } from "react-redux";
+import { hashHistory } from "react-router";
 
 import { logout } from "../actions";
 
@@ -13,7 +14,8 @@ import { logout } from "../actions";
 export default class Navbar extends React.Component {
 	logout(e){
 		e.preventDefault();
-		this.props.dispatch(logout())
+		this.props.dispatch(logout());
+		hashHistory.push("/");
 	}
 
 	renderSettingsButton() {

@@ -178,28 +178,43 @@ class ChangeAllPasswordForm extends React.Component {
 
 		let success_msg;
 		if(this.props.pass_changed){
-			success_msg = <small class="text-success">Password Changed successfully!!</small>
+			success_msg = <h2 class="text-success">Password Changed successfully!!</h2>
+		}
+
+		let super_submit_btn;
+		let staff_submit_btn;
+		if(this.props.pass_changing){
+			super_submit_btn = staff_submit_btn = <button class="btn btn-default" >Changing Password...</button>;
+		} else {
+			super_submit_btn = <button class="btn btn-success" onClick={this.submit_password.bind(this, 1)}>Change Password</button>;
+			staff_submit_btn = <button class="btn btn-success" onClick={this.submit_password.bind(this, 2)}>Change Password</button>;
 		}
 
 		return(
 			<div>
 				{success_msg}
-				<div class = "form-group">
-					{superuser_error_block}
-			        <label for = "name">Change SuperUser Password</label>
+				
+				{superuser_error_block}
+			    <label for = "name">Change SuperUser Password</label>
+			    <div class = "form-group">
 			        <input type="password" class="form-control" onChange={this.handlePassChange.bind(this,1)} value={this.state.superuser_password1} placeholder="Enter new superuser password"/>
+			    </div>
+			    <div class = "form-group">
 			        <input type="password" class="form-control" onChange={this.handlePassChange.bind(this,2)} value={this.state.superuser_password2} placeholder="conform password"/>
 				</div>
-				<button class="btn btn-success" onClick={this.submit_password.bind(this, 1)}>Change Password</button>
+				{super_submit_btn}
 				<hr/>
 			
-				<div class = "form-group">
-					{staffuser_error_block}
+				
+				{staffuser_error_block}
 			        <label for = "name">Change StaffUser Password</label>
+			    <div class = "form-group">
 			        <input type="password" class="form-control" onChange={this.handlePassChange.bind(this,3)} value={this.state.staffuser_password1} placeholder="Enter new staffuser password"/>
+			    </div>
+			    <div class = "form-group">
 			        <input type="password" class="form-control" onChange={this.handlePassChange.bind(this,4)} value={this.state.staffuser_password2} placeholder="conform password"/>
 				</div>
-				<button class="btn btn-success" onClick={this.submit_password.bind(this, 2)}>Change Password</button>
+				{staff_submit_btn}
 			</div>
 		)
 	}

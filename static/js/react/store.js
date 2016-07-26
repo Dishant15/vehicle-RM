@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
 import { passReducer, vehicleReducer, priceReducer, couponReducer } from "./reducers";
-import { getHashPass } from "./actions";
+import { getHashPass, getVehicles } from "./actions";
 
 
 const reducers = combineReducers({
@@ -15,9 +15,10 @@ const reducers = combineReducers({
 const store = createStore( reducers, applyMiddleware(thunk));
 
 store.subscribe(()=>{
-	console.log("new store :", store.getState().pass);
+	console.log("Store Updated :", store.getState().vehicles);
 });
 
 store.dispatch(getHashPass());
+store.dispatch(getVehicles());
 
 export default store;

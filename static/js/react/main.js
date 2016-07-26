@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import Layout from './Layout';
 import Index from './pages/Index';
 import VehicleForm from './components/VehicleForm';
+import EditVehicle from './pages/EditVehicle';
 import CouponForm from './components/CouponForm';
 import ChangePassForm from './components/ChangePassForm';
 
@@ -21,6 +22,7 @@ ReactDom.render(
 				<Route path='change-pass' component={ChangePassForm}/>
 				<Route path='add-coupon' component={CouponForm}/>
 				<Route path='add-vehicle' component={VehicleForm}/>
+				<Route path='edit-vehicle' component={EditVehicle}/>
 			</Route>
 		</Router>
 	</Provider>,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 
-import { passwordValidated } from "../actions";
+import { login } from "../actions";
 import Home from "../components/Home";
 import LoginForm from "../components/LoginForm";
 
@@ -13,7 +13,7 @@ import LoginForm from "../components/LoginForm";
 export default class Index extends React.Component {
 
 	passwordMatched(level){
-		this.props.dispatch(passwordValidated(level));
+		this.props.dispatch(login(level));
 	}
 
 	render(){

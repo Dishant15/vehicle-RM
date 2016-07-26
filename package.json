@@ -11,13 +11,12 @@
   "dependencies": {
     "axios": "^0.13.1",
     "bcryptjs": "^2.3.0",
-    "fs": "0.0.2",
-    "jsonfile": "^2.3.1",
     "nedb": "^1.8.0",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "^4.4.5",
     "react-router": "latest",
+    "react-select": "^1.0.0-beta14",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0"
   },

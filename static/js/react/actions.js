@@ -1,14 +1,72 @@
 import axios from 'axios';
 import { generateHash } from "./utils";
 
+export function editVehicleEntry(entry) {
+	// add new vehicle entry to database
+	return ((dispatch) => {
+		axios.post("http://localhost:8015/edit-vehicle", entry)
+			.then((response) => {
+				// server must return whole new list of entries so we can update store with it
+				dispatch({
+					type:"VEHICLE_ENTRY_EDITED",
+					payload: response.data
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: "VEHICLE_ENTRY_EDIT_FAILED",
+					payload: err
+				});
+			});
+	});
+}
+
+export function getVehicles() {
+	return ((dispatch) => {
+		dispatch({type: "VEHICLES_FETCHING"});
+		axios.get("http://localhost:8015/get-vehicles")
+			.then((response) => {
+				dispatch({
+					type:"VEHICLES_FETCHED",
+					payload: response.data
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: "VEHICLES_FETCH_FAILED",
+					payload: err
+				});
+			});
+	});
+}
+
+export function newVehicleEntry(newEntry) {
+	// add new vehicle entry to database
+	return ((dispatch) => {
+		axios.post("http://localhost:8015/add-vehicle", newEntry)
+			.then((response) => {
+				dispatch({
+					type:"VEHICLE_ENTRY_CREATED",
+					payload: response.data
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: "VEHICLE_ENTRY_FAILED",
+					payload: err
+				});
+			});
+	});
+}
+
 export function getHashPass(){
 	// get password hash saved from the database
 	return ((dispatch) => {
-		axios.get("http://localhost:8080/get-pass")
-			.then((reaponse) => {
+		axios.get("http://localhost:8015/get-pass")
+			.then((response) => {
 				dispatch({
 					type:"PASS_REQ_SUCCESS",
-					payload: reaponse.data
+					payload: response.data
 				});
 			})
 			.catch((err) => {
@@ -27,7 +85,8 @@ export function changePassword(level, new_password) {
 			level,
 			hash:generateHash(new_password)
 		};
-		axios.post("http://localhost:8080/change-pass", dataToServer)
+		dispatch({type:"PASSWORD_CHANGING"});
+		axios.post("http://localhost:8015/change-pass", dataToServer)
 			.then((response) => {
 				dispatch({
 					type:"PASSWORD_CHANGED",
@@ -49,7 +108,7 @@ export function logout(level){
 	};
 }
 
-export function passwordValidated(level){
+export function login(level){
 	return {
 		type: "PASSWORD_VALIDATED",
 		payload: level

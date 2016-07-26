@@ -34,6 +34,9 @@ export const passReducer = (state=initPass, action) => {
 		case "PASSWORD_CHANGED": {
 			return{...state, pass_changed:true, pass_changing:false, superuser_hash:action.payload.superuser_hash, staffuser_hash: action.payload.staffuser_hash};
 		}
+		case "PASSWORD_CHANGING": {
+			return{...state, pass_changed:false, pass_changing:true};
+		}
 
 		default: {
 			return state;
@@ -42,7 +45,27 @@ export const passReducer = (state=initPass, action) => {
 };
 
 export const vehicleReducer = (state=[], action) => {
-	return state;
+	switch(action.type){
+		case "VEHICLE_ENTRY_CREATED": {
+			state.push(action.payload);
+			return state;
+		}
+		case "VEHICLES_FETCHED": {
+			return action.payload;
+		}
+		case "VEHICLES_FETCH_FAILED": {
+			console.log("something with vehicle fetch went wrong on server side:",action.payload);
+			return state;
+		}
+		case "VEHICLE_ENTRY_EDITED": {
+			// some kind of notification?
+			return action.payload;
+		}
+
+		default: {
+			return state;
+		}
+	}
 };
 
 export const priceReducer = (state=[], action) => {
