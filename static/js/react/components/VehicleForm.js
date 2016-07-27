@@ -37,12 +37,10 @@ export default class VehicleForm extends React.Component {
 	}
 
 	handleVnoChange(e){
-		e.preventDefault();
 		this.setState({vno:e.target.value, error:false});
 	}
 
 	handleUserChange(e){
-		e.preventDefault();
 		this.setState({user:e.target.value, error:false});
 	}
 

@@ -9,6 +9,7 @@ import VehicleForm from './components/VehicleForm';
 import EditVehicle from './pages/EditVehicle';
 import CouponForm from './components/CouponForm';
 import ChangePassForm from './components/ChangePassForm';
+import ShowReports from './pages/ShowReports';
 
 import store from './store';
 
@@ -23,6 +24,7 @@ ReactDom.render(
 				<Route path='add-coupon' component={CouponForm}/>
 				<Route path='add-vehicle' component={VehicleForm}/>
 				<Route path='edit-vehicle' component={EditVehicle}/>
+				<Route path='show-reports' component={ShowReports}/>
 			</Route>
 		</Router>
 	</Provider>,

@@ -27,8 +27,7 @@ export default class Home extends React.Component {
 					{this.renderBlock.bind(this)("add-coupon", "New Coupon")}
 					{this.renderBlock.bind(this)("add-vehicle", "New Vehicle Entry")}
 					{this.renderBlock.bind(this)("edit-vehicle", "Edit Vehicle Entry")}
-					{this.renderBlock.bind(this)("add-prices", "Set Prices")}
-					{this.props.pass_level == 1 ? this.renderBlock.bind(this)("search", "Report") : null}
+					{this.props.pass_level == 1 ? this.renderBlock.bind(this)("show-reports", "Report") : null}
 				</div>
 			</div>
 		)

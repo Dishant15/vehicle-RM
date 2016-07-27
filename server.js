@@ -106,7 +106,15 @@ dispatcher.onPost("/edit-vehicle", function(req, res) {
 dispatcher.onPost("/add-coupon", function(req, res) {
 	db.coupons.insert(JSON.parse(req.body), function(err, newDoc) {
 			res.writeHead(200, {'Content-Type': 'text/json'});
-			console.log(newDoc);
+	    	res.end(JSON.stringify(newDoc));
+	    }
+	);
+});
+
+dispatcher.onGet("/get-all-coupon", function(req, res) {
+	db.coupons.find({}, function(err, newDoc) {
+			if(err){console.log("error in password fetch :",err);}
+			res.writeHead(200, {'Content-Type': 'text/json'});
 	    	res.end(JSON.stringify(newDoc));
 	    }
 	);

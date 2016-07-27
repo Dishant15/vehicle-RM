@@ -1,6 +1,27 @@
 import axios from 'axios';
 import { generateHash } from "./utils";
 
+export function getAllCoupon() {
+	// add new vehicle entry to database
+	return ((dispatch) => {
+		dispatch({type:"COUPONS_FETCHING"});
+		axios.get("http://localhost:8015/get-all-coupon")
+			.then((response) => {
+				// server must return whole new list of entries so we can update store with it
+				dispatch({
+					type:"COUPONS_FETCHED",
+					payload: response.data
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: "COUPONS_FETCH_ERROR",
+					payload: err
+				});
+			});
+	});
+}
+
 export function addNewCoupon(coupon) {
 	// add new vehicle entry to database
 	return ((dispatch) => {

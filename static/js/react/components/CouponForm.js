@@ -20,8 +20,8 @@ export default class CouponForm extends React.Component {
 		this.state = this.initState;
 	}
 
-	vehicleChange(event){
-		this.setState({vehicle:event.value, error:false});
+	vehicleChange(selected_obj){
+		this.setState({vehicle:selected_obj.value, error:false});
 	}
 
 	handleKmChange(event){
@@ -64,7 +64,7 @@ export default class CouponForm extends React.Component {
 		this.props.vehicles.forEach(function(ele, index, array) {
 			vehicle_list.push({
 				value: index,
-				label: ele.vno + " | " + ele.user
+				label: ele.vno + " | " + ele.user + " | " + ele.vtype
 			});
 		});
 

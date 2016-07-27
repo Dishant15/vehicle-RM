@@ -7,6 +7,12 @@ const initPass = {
 	level: null
 };
 
+const initCoupon = {
+	coupons: [],
+	fetching: false,
+	fetched: false
+}
+
 export const passReducer = (state=initPass, action) => {
 	switch(action.type){
 		case "PASSWORD_VALIDATED": {
@@ -69,11 +75,17 @@ export const vehicleReducer = (state=[], action) => {
 	}
 };
 
-export const couponReducer = (state=[], action) => {
+export const couponReducer = (state=initCoupon, action) => {
 	switch(action.type){
 		case "COUPON_ADDED": {
 			// some kind of notification?
 			return state;
+		}
+		case "COUPONS_FETCHING": {
+			return {coupons: [], fetching:true, fetched:false}
+		}
+		case "COUPONS_FETCHED": {
+			return {coupons: action.payload, fetching:false, fetched: true};
 		}
 
 		default: {
