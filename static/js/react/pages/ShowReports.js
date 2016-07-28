@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import Select from 'react-select';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 import _ from "lodash";
 
 import ShowCoupons from "../components/ShowCoupons";
@@ -19,7 +21,12 @@ export default class ShowReports extends React.Component {
 		super();
 		this.initState = {
 			vehicle_indexes:[],
-			vehicle_sel_disabled: false
+			vtypes: [],
+			date_filter: null,
+			date_selected:false,
+			start_date:null,
+			end_date:null,
+			date_range_selected: false
 		};
 		this.state = this.initState;
 	}
@@ -53,6 +60,55 @@ export default class ShowReports extends React.Component {
 			
 	}
 
+	vehicleTypeChange(selected){
+		if(selected){
+			this.setState({vtypes:selected.split(',')});
+		} else {
+			this.setState({vtypes:[]});
+		}
+	}
+
+	handleDateChange(date){
+		if(date){
+			this.setState({
+				date_filter:date,
+				date_selected: true
+			});
+		} else {
+			this.setState({
+				date_filter:date,
+				date_selected: false
+			})
+		}
+	}
+
+	handleStartDateChange(date){
+		if(date){
+			this.setState({
+				start_date:date,
+			});
+		} else {
+			this.setState({
+				start_date:date,
+				date_range_selected: false
+			})
+		}
+	}
+
+	handleEndDateChange(date){
+		if(date){
+			this.setState({
+				end_date:date,
+				date_range_selected: true
+			});
+		} else {
+			this.setState({
+				end_date:date,
+				date_range_selected: false
+			})
+		}
+	}
+
 	renderVehicleSelector(){
 		let vehicle_list = [];
 
@@ -71,7 +127,6 @@ export default class ShowReports extends React.Component {
 				    value={this.state.vehicle_indexes}
 				    options={vehicle_list}
 				    onChange={this.vehicleChange.bind(this)}
-				    disabled={this.state.vehicle_sel_disabled}
 				    multi 
 				    simpleValue
 				/>
@@ -79,8 +134,70 @@ export default class ShowReports extends React.Component {
 		)
 	}
 
+	renderFilters(){
+		const vtypes = [
+			{ value: 'bike', label: 'Bike' },
+			{ value: 'aviator', label: 'Aviator' },
+			{ value: 'truck', label: 'Truck' },
+			{ value: 'forklift', label: 'Forklift' },
+			{ value: '4 wheeler', label: '4 Wheeler' }
+		];
+
+		return(
+			<div>
+				<div class = "form-group">
+					<label>Select Vehicle Type</label>
+				</div>
+				<div class = "form-group">
+					<Select
+					    name="vehicle-type-select"
+					    placeholder="Select to search by vehicle types"
+					    value={this.state.vtypes}
+					    options={vtypes}
+					    onChange={this.vehicleTypeChange.bind(this)}
+					    multi 
+					    simpleValue
+					/>
+				</div>
+
+				<div class = "form-group">
+					<DatePicker
+				        selected={this.state.date_filter}
+				        onChange={this.handleDateChange.bind(this)}
+				        isClearable={true}
+				        maxDate={moment()}
+				        placeholderText='Pick a specific date'
+				    />
+				</div>
+
+				<div class = "form-group">
+					<label>Select Date Range</label>
+				</div>
+				<div class = "form-group">
+					<DatePicker
+				        selected={this.state.start_date}
+				        onChange={this.handleStartDateChange.bind(this)}
+				        isClearable={true}
+				        maxDate={moment()}
+				        placeholderText='Pick starting date'
+				    />
+
+				    <DatePicker
+				        selected={this.state.end_date}
+				        onChange={this.handleEndDateChange.bind(this)}
+				        isClearable={true}
+				        minDate={this.state.start_date}
+				        maxDate={moment().add(1, 'days')}
+				        placeholderText='Pick end date'
+				    />
+				</div>
+			</div>
+		);
+	}
+
 	renderReport(){
 		let { coupon_list } = this.props;
+		let total_amount = 0;
 
 		if(this.state.vehicle_indexes.length){
 			// if vehicles selected filter with them
@@ -89,21 +206,47 @@ export default class ShowReports extends React.Component {
 				selected_obj.push(this.props.vehicles[ind].vno);
 			});
 			coupon_list = _.filter(coupon_list, (coupon)=>{    
-							    return selected_obj.indexOf(coupon.vno) != -1
+							    return selected_obj.indexOf(coupon.vno) != -1;
 							});
 		}
+
+		if(this.state.vtypes.length){
+			// if vehicle type selected filter with them
+			const selected_vtypes = this.state.vtypes;
+			coupon_list = _.filter(coupon_list, (coupon)=>{    
+							    return selected_vtypes.indexOf(coupon.vtype) != -1;
+							});
+		}
+
+		if(this.state.date_selected){
+			const date = this.state.date_filter;
+			coupon_list = _.filter(coupon_list, (coupon)=>{    
+							    return date.isSame(coupon.timestamp, 'day');
+							});
+		}
+
+		if(this.state.date_range_selected){
+			const { start_date, end_date } = this.state;
+			coupon_list = _.filter(coupon_list, (coupon)=>{   
+								return moment(coupon.timestamp)
+											.isBetween(start_date, end_date, null, '[]');
+							});
+		}
+
+		_.each(coupon_list, (coupon)=>{
+			total_amount = total_amount + Number(coupon.amount);
+		});
 		
 		return (
 			<div>
-				<h2>Filters will be here</h2>
+				{this.renderFilters()}
 				<hr/>
-				<ShowCoupons data={coupon_list} />
+				<ShowCoupons data={coupon_list} total_amount={total_amount}/>
 			</div>
 		);
 	}
 
 	render(){
-		
 		return(
 			<div class="container">
 				<div class = "form-group">
