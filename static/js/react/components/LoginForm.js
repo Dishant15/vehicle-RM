@@ -42,9 +42,15 @@ export default class LoginForm extends React.Component {
 		return (
 			<div class="container">
 				{this.renderError.bind(this)()}
-				<input type="password" onChange={this.handleChange.bind(this)} value={this.state.password} style={colorBlack}/>
+				<div class="black-box">
+	                <div class="input-container">
+	                    <input type="password" placeholder="Enter Login Password" onChange={this.handleChange.bind(this)} value={this.state.password} style={colorBlack}/>
+	                </div>
+	            </div>
 
-				<button class="btn btn-success" onClick={this.checkPass.bind(this)}> Login </button>
+	            <div class="btn-wrapper">
+					<button class="btn btn-success" onClick={this.checkPass.bind(this)}> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Login </button>
+				</div>
 			</div>
 		)
 	}

@@ -93,10 +93,10 @@ export default class VehicleForm extends React.Component {
 		let submitBtn;
 		let backBtn;
 		if(this.state.edit){
-			backBtn = <button class="btn btn-danger" onClick={this.props.goBack}>Go Back</button>
-			submitBtn = <button class="btn btn-warning" onClick={this.editForm.bind(this)}>Edit Entry</button>
+			backBtn = <button class="btn btn-danger" onClick={this.props.goBack}><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Go Back</button>
+			submitBtn = <button class="btn btn-warning" onClick={this.editForm.bind(this)}><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit Entry</button>
 		} else {
-			submitBtn = <button class="btn btn-success" onClick={this.submitForm.bind(this)}>Create Entry</button>
+			submitBtn = <button class="btn btn-success" onClick={this.submitForm.bind(this)}><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Entry</button>
 		}
 
 		return(
@@ -105,11 +105,13 @@ export default class VehicleForm extends React.Component {
 				<hr/>
 				{error_block}
 				<div class = "form-group">
+					<label>Vehicle Number</label>
 			        <input type="text" class="form-control" onChange={this.handleVnoChange.bind(this)} value={this.state.vno} placeholder="Enter Vehicle Number"/>
 				</div>
 
 				<div class = "form-group">
-			        <input type="text" class="form-control" onChange={this.handleUserChange.bind(this)} value={this.state.user} placeholder="Vehicle Used by...."/>
+					<label>Vehicle User</label>
+			        <input type="text" class="form-control" onChange={this.handleUserChange.bind(this)} value={this.state.user} placeholder="Enter name of vehicle user"/>
 				</div>
 
 				<div class = "form-group">
@@ -136,8 +138,11 @@ export default class VehicleForm extends React.Component {
 					    clearable={false}
 					/>
 				</div>
-				{submitBtn}
-				{backBtn}
+
+				<div class="btn-wrapper">
+					{submitBtn}
+					{backBtn}
+				</div>
 			</div>
 		)
 	}

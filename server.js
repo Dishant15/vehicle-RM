@@ -16,7 +16,7 @@ const PORT=8015;
 function handleRequest(request, response){
       try {
         //log the request on console
-        console.log(request.url);
+        // console.log(request.url);
         //Disptach
         dispatcher.dispatch(request, response);
     } catch(err) {
@@ -29,23 +29,37 @@ function handleRequest(request, response){
 
 // All the password routes bellow----
 
-dispatcher.onGet("/add-entry", function(req, res) {
-	db.password.insert({
-		_id:1,
-		superuser_hash:"$2a$10$c5F2f/dYJWOFrUw27MKk1Olcd8j9b36u6AHvkcacH4FnJsT3l0RIO", 
-		staffuser_hash:"$2a$10$cROLpIwfpQ.ANYoBG0F.UO3D5kbCjCbKNyDJR6iNIJLEd92CIrG7e"
-		}, function(err, newDoc) {
-			res.writeHead(200, {'Content-Type': 'text/json'});
-	    	res.end(JSON.stringify(newDoc));
-		}
-	);
-});
+// BackDoor route to reset password
+// dispatcher.onGet("/add-entry", function(req, res) {
+// 	db.password.insert({
+// 		_id:1,
+// 		superuser_hash:"$2a$10$QkcIaxq.quqAOEn4stP1I.7S6sarwaAydhXv9oKcG5FvvPHcmaFWK", 
+// 		staffuser_hash:"$2a$10$9YK6TAE8oUTbHM8WvCxew.quNAefYFCtAmFiBpcQ5.iwxAYpJFBd2"
+// 		}, function(err, newDoc) {
+// 			res.writeHead(200, {'Content-Type': 'text/json'});
+// 	    	res.end(JSON.stringify(newDoc));
+// 		}
+// 	);
+// });
 
 dispatcher.onGet("/get-pass", function(req, res) {
-	db.password.findOne({_id:1}, function(err, newDoc) {
+	db.password.find({_id:1}, function(err, newDoc) {
 		if(err){console.log("error in password fetch :",err);}
-		res.writeHead(200, {'Content-Type': 'text/json'});
-    	res.end(JSON.stringify(newDoc));
+		if(newDoc.length){
+			res.writeHead(200, {'Content-Type': 'text/json'});
+    		res.end(JSON.stringify(newDoc[0]));
+		} else {
+			// this is first time so no password set
+			var default_pass_obj = {
+				_id:1,
+				superuser_hash:"$2a$10$QkcIaxq.quqAOEn4stP1I.7S6sarwaAydhXv9oKcG5FvvPHcmaFWK", 
+				staffuser_hash:"$2a$10$9YK6TAE8oUTbHM8WvCxew.quNAefYFCtAmFiBpcQ5.iwxAYpJFBd2"
+			};
+			db.password.insert(default_pass_obj);
+			res.writeHead(200, {'Content-Type': 'text/json'});
+    		res.end(JSON.stringify(default_pass_obj));
+		}
+		
 	});
 });
 

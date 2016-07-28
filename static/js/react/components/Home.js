@@ -11,8 +11,8 @@ export default class Home extends React.Component {
 
 	renderBlock(link, lable) {
 		return(
-			<div>
-				<Link class="btn btn-default" to={link}>{lable}</Link>
+			<div class="list-group">
+				<Link class="list-group-item" to={link}>{lable}</Link>
 			</div>
 		)
 	}

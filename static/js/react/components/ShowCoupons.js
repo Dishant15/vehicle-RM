@@ -21,10 +21,12 @@ export default class ShowCoupons extends React.Component {
 
 		return(
 			<div class="print-block">
-				<button class="btn btn-default" onClick={window.print}>Print This</button>
-				<table class="table print-block">
-
-				   
+				<div class="btn-wrapper">
+					<button class="btn btn-default" onClick={window.print}>
+						<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print Page
+					</button>
+				</div>
+				<table class="table table-striped">
 				    <thead>
 						<tr>
 							<th>Vehicle No.</th>

@@ -18,27 +18,38 @@ export default class Navbar extends React.Component {
 		hashHistory.push("/");
 	}
 
-	renderSettingsButton() {
-		return(<span> | <Link to="change-pass"><span class="glyphicon glyphicon-cog"></span></Link></span>)
-	}
-
 	renderLogoutButton() {
 		if(this.props.logged){
-			return(<span> | <a href="#" onClick={this.logout.bind(this)}><span class="glyphicon glyphicon-off"></span></a></span>)
+			return(
+				<a href="#" onClick={this.logout.bind(this)}>
+					<div class="box">
+						<span class="glyphicon glyphicon-off"></span>
+						<div>Logout</div>
+					</div>
+				</a>
+			)
 		}
 	}
 
 	render(){
-		const marginAll = {
-			margin: "30px"
-		};
+	
 		return(
-			<div class="text-center">
-				<div class="header" style={marginAll}>
-					<Link to="/"><span class="glyphicon glyphicon-home"></span></Link>
-					{this.renderSettingsButton.bind(this)()}
-					{this.renderLogoutButton.bind(this)()}
-				</div>
+			<div class="menubar">
+				<Link to="/">
+					<div class="box">
+						<span class="glyphicon glyphicon-home"></span>
+						<div>Home</div>
+					</div>
+				</Link>
+
+				{this.renderLogoutButton.bind(this)()}
+
+				<Link to="change-pass">
+					<div class="box">
+						<span class="glyphicon glyphicon-cog"></span>
+						<div>Password</div>
+					</div>
+				</Link>
 			</div>
 		);
 	}

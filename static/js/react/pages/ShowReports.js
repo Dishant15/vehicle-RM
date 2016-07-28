@@ -72,7 +72,10 @@ export default class ShowReports extends React.Component {
 		if(date){
 			this.setState({
 				date_filter:date,
-				date_selected: true
+				date_selected: true,
+				date_range_selected: false,
+				start_date: null,
+				end_date: null
 			});
 		} else {
 			this.setState({
@@ -86,6 +89,8 @@ export default class ShowReports extends React.Component {
 		if(date){
 			this.setState({
 				start_date:date,
+				date_filter:null,
+				date_selected:false
 			});
 		} else {
 			this.setState({
@@ -99,7 +104,9 @@ export default class ShowReports extends React.Component {
 		if(date){
 			this.setState({
 				end_date:date,
-				date_range_selected: true
+				date_range_selected: true,
+				date_filter:null,
+				date_selected:false
 			});
 		} else {
 			this.setState({
@@ -120,16 +127,21 @@ export default class ShowReports extends React.Component {
 		});
 
 		return(
-			<div class = "form-group">
-				<Select
-				    name="vehicle-select"
-				    placeholder="Select to search by vehicles..."
-				    value={this.state.vehicle_indexes}
-				    options={vehicle_list}
-				    onChange={this.vehicleChange.bind(this)}
-				    multi 
-				    simpleValue
-				/>
+			<div>
+				<div class = "form-group">
+					<label>Filter By Vehicle</label>
+				</div>
+				<div class = "form-group">
+					<Select
+					    name="vehicle-select"
+					    placeholder="Select to search by vehicles..."
+					    value={this.state.vehicle_indexes}
+					    options={vehicle_list}
+					    onChange={this.vehicleChange.bind(this)}
+					    multi 
+					    simpleValue
+					/>
+				</div>
 			</div>
 		)
 	}
@@ -146,7 +158,7 @@ export default class ShowReports extends React.Component {
 		return(
 			<div>
 				<div class = "form-group">
-					<label>Select Vehicle Type</label>
+					<label>Filter By Vehicle Type</label>
 				</div>
 				<div class = "form-group">
 					<Select
@@ -161,6 +173,9 @@ export default class ShowReports extends React.Component {
 				</div>
 
 				<div class = "form-group">
+					<label>Filter Single Date</label>
+				</div>
+				<div class = "form-group">
 					<DatePicker
 				        selected={this.state.date_filter}
 				        onChange={this.handleDateChange.bind(this)}
@@ -171,7 +186,7 @@ export default class ShowReports extends React.Component {
 				</div>
 
 				<div class = "form-group">
-					<label>Select Date Range</label>
+					<label>Filter By Date Range</label>
 				</div>
 				<div class = "form-group">
 					<DatePicker
@@ -249,11 +264,7 @@ export default class ShowReports extends React.Component {
 	render(){
 		return(
 			<div class="container">
-				<div class = "form-group">
-					<label>Select Vehicle</label>
-				</div>
 				{this.renderVehicleSelector()}
-				<hr/>
 				{this.renderReport()}
 			</div>
 		)

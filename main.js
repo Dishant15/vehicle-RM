@@ -6,7 +6,7 @@ const {Menu} = electron;
 const {BrowserWindow} = electron;
 
 // go DEBUG false for main deployment
-const DEBUG = true;
+const DEBUG = false;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

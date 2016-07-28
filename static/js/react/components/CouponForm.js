@@ -105,8 +105,14 @@ export default class CouponForm extends React.Component {
 			        <input type="text" class="form-control" onChange={this.handleAmountChange.bind(this)} value={this.state.amount} placeholder="Enter coupon amount"/>
 				</div>
 
-				<button class="btn btn-success" onClick={this.submitForm.bind(this)}>Create Coupon</button> 
-				<button class="btn btn-danger" onClick={this.cancelForm.bind(this)}>Cancel</button>
+				<div class="btn-wrapper">
+					<button class="btn btn-success" onClick={this.submitForm.bind(this)}>
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Create Coupon
+					</button>
+					<button class="btn btn-danger" onClick={this.cancelForm.bind(this)}>
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+					</button>
+				</div>
 			</div>
 		)
 	}

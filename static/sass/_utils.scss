@@ -1,0 +1,10 @@
+$side-bgcolor: #2B303B;
+$golden-mate-color: #CDB274;
+
+@mixin background-transition($time) {
+	-webkit-transition: background $time linear;
+	-moz-transition: background $time linear;
+	-ms-transition: background $time linear;
+	-o-transition: background $time linear;
+	transition: background $time linear;
+}

@@ -1,0 +1,12 @@
+.btn-wrapper{
+	margin: 5px auto;
+	text-align: center;
+	& button {
+		margin: 8px;
+		min-width: 150px;
+
+		& .glyphicon{
+			float: left;
+		}
+	}
+}
